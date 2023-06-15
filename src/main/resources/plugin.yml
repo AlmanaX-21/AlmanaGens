@@ -1,0 +1,7 @@
+name: AlmanaGens
+version: '${project.version}'
+main: me.almana.almanagens.AlmanaGens
+api-version: 1.19
+prefix: [ AlmanaGens ]
+authors: [ AlmanaX21 ]
+description: A gen core by almana
