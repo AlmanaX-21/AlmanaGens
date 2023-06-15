@@ -20,7 +20,7 @@ public class AvgGen {
     private String id;
     private Material material;
     private String name;
-    private Collection<String> lore;
+    private Collection<String> lore = new ArrayList<String>();
     private boolean isEnchanted;
     private int customModelData;
     private AvgItem drop;
@@ -46,6 +46,62 @@ public class AvgGen {
                 ", customModelData=" + customModelData +
                 ", drop=" + drop.toString() +
                 '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<String> getLore() {
+        return lore;
+    }
+
+    public void setLore(Collection<String> lore) {
+        this.lore = lore;
+    }
+
+    public boolean isEnchanted() {
+        return isEnchanted;
+    }
+
+    public void setEnchanted(boolean enchanted) {
+        isEnchanted = enchanted;
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    public void setCustomModelData(int customModelData) {
+        this.customModelData = customModelData;
+    }
+
+    public AvgItem getDrop() {
+        return drop;
+    }
+
+    public void setDrop(AvgItem drop) {
+        this.drop = drop;
     }
 
     public ItemStack convert() {

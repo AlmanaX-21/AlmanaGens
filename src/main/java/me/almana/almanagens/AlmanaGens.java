@@ -1,18 +1,14 @@
 package me.almana.almanagens;
 
 import me.almana.almanagens.models.AvgGen;
-import me.almana.almanagens.models.AvgItem;
-import me.almana.almanagens.utils.AvgItemBuilder;
 import me.almana.almanagens.utils.JsonUtils;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public final class AlmanaGens extends JavaPlugin {
 
@@ -20,11 +16,12 @@ public final class AlmanaGens extends JavaPlugin {
     private static String serverPrefix;
     private static MiniMessage miniMessage = MiniMessage.miniMessage();
     private File genFile;
-    private ArrayList<AvgGen> avgGens;
+    private ArrayList<AvgGen> avgGens = new ArrayList<>();
 
     @Override
     public void onEnable() {
 
+        plugin = this;
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         serverPrefix = getConfig().getString("PREFIX");
@@ -32,12 +29,11 @@ public final class AlmanaGens extends JavaPlugin {
         genFile = new File(getDataFolder().getAbsolutePath() + "/gens.json");
 
         try {
+
             avgGens = JsonUtils.readGens(genFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        test();
     }
 
     @Override
@@ -60,18 +56,5 @@ public final class AlmanaGens extends JavaPlugin {
 
     public static MiniMessage getMiniMessage() {
         return miniMessage;
-    }
-
-    private void test() {
-
-        AvgItem drop = AvgItemBuilder.builder(Material.IRON_INGOT)
-                .name("bruh")
-                .lore(List.of("bruh", "blow"))
-                .buildDrop();
-        AvgGen gen = AvgItemBuilder.builder(Material.IRON_BLOCK)
-                .name("Ahh").id("iron").isEnchanted(true).drop(drop).buildGen();
-        avgGens.add(gen);
-
-        getLogger().info(avgGens.toString());
     }
 }

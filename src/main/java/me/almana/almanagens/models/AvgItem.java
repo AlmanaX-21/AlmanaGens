@@ -28,6 +28,46 @@ public class AvgItem {
         this.customModelData = customModelData;
     }
 
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<String> getLore() {
+        return lore;
+    }
+
+    public void setLore(Collection<String> lore) {
+        this.lore = lore;
+    }
+
+    public boolean isEnchanted() {
+        return isEnchanted;
+    }
+
+    public void setEnchanted(boolean enchanted) {
+        isEnchanted = enchanted;
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    public void setCustomModelData(int customModelData) {
+        this.customModelData = customModelData;
+    }
+
     @Override
     public String toString() {
         return "AvgItem{" +
