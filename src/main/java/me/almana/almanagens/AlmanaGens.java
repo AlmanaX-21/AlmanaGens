@@ -1,8 +1,10 @@
 package me.almana.almanagens;
 
 import me.almana.almanagens.models.AvgGen;
+import me.almana.almanagens.models.AvgPlayer;
 import me.almana.almanagens.utils.JsonUtils;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +18,9 @@ public final class AlmanaGens extends JavaPlugin {
     private static String serverPrefix;
     private static MiniMessage miniMessage = MiniMessage.miniMessage();
     private File genFile;
+    private File playerFile;
     private ArrayList<AvgGen> avgGens = new ArrayList<>();
+    private ArrayList<AvgPlayer> avgPlayers = new ArrayList<AvgPlayer>();
 
     @Override
     public void onEnable() {
@@ -27,13 +31,26 @@ public final class AlmanaGens extends JavaPlugin {
         serverPrefix = getConfig().getString("PREFIX");
 
         genFile = new File(getDataFolder().getAbsolutePath() + "/gens.json");
+        playerFile = new File(getDataFolder().getAbsolutePath() + "/players.json");
 
-        try {
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                avgGens = JsonUtils.readGens(genFile);
+                avgPlayers = JsonUtils.readPlayers(playerFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
-            avgGens = JsonUtils.readGens(genFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
+
+            try {
+                JsonUtils.savePlayerJson(avgPlayers, playerFile);
+                getLogger().info("Saved player data.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }, 6000L, 500L);
     }
 
     @Override
@@ -41,6 +58,7 @@ public final class AlmanaGens extends JavaPlugin {
 
         try {
             JsonUtils.saveGenJson(avgGens, genFile);
+            JsonUtils.savePlayerJson(avgPlayers, playerFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
